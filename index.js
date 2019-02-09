@@ -30,7 +30,7 @@ exports.handle = async (event) => {
   };
 
   try {
-    const token = await getParameter(SLACK_TOKEN_KEY);
+    const token = await getParameter(SLACK_TOKEN_KEY, false);
     const slackClient = new SlackClient(token);
     await slackClient.postMessage(message);
   } catch (err) {
