@@ -1,7 +1,7 @@
 {
   "name": "build-notify",
   "version": "1.0.0",
-  "description": "slack notification",
+  "description": "Slack notification of CodeBuild by Cloudwatch Events",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,13 +9,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "aws-sam-local": "^0.2.11",
-    "aws-sdk": "^2.400.0",
     "eslint": "^5.3.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0"
   },
   "dependencies": {
-    "@slack/client": "^4.8.0"
+    "@slack/client": "^4.8.0",
+    "aws-sdk": "^2.400.0"
   }
 }

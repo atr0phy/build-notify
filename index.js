@@ -1,34 +1,39 @@
 const Logger = require('./src/lib/logger');
-const postMessage = require('./src/lib/slack-client');
+const SlackClient = require('./src/lib/slack-client');
+const getParameter = require('./src/lib/ssm-client');
 
-const logger = new Logger();
-
-const buildStatuses = {
+const SLACK_CHANNEL = process.env.SLACK_CHANNEL || '';
+const SLACK_TOKEN_KEY = '/development/slack_api_token';
+const BuildStatus = {
   IN_PROGRESS: 'デプロイを開始します',
   SUCCEEDED: 'デプロイに成功しました',
   FAILED: 'デプロイに失敗しました',
   STOPPED: 'デプロイに失敗しました',
 };
 
-exports.myHandler = async (event) => {
-  const getText = (buildStatus) => {
-    let text = buildStatuses[buildStatus] || '一致するステータスがありません';
-    if ([buildStatuses.FAILED, buildStatuses.STOPPED].includes(text)) {
+const logger = new Logger();
+
+exports.handle = async (event) => {
+  const getText = (status) => {
+    let text = BuildStatus[status] || '一致するステータスがありません';
+    if ([BuildStatus.FAILED, BuildStatus.STOPPED].includes(text)) {
       text += `\n ${event.detail['additional-information'].logs['deep-link']}`;
     }
     return text;
   };
 
   const message = {
-    channel: '#develop',
+    channel: SLACK_CHANNEL,
     text: getText(event.detail['build-status']),
     icon_emoji: ':rocket:',
     username: 'build-notify',
   };
 
   try {
-    await postMessage(message);
+    const token = await getParameter(SLACK_TOKEN_KEY);
+    const slackClient = new SlackClient(token);
+    await slackClient.postMessage(message);
   } catch (err) {
-    logger.log(JSON.stringify(err));
+    logger.error(err);
   }
 };

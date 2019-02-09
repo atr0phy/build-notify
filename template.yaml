@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    build-notify
+
+Globals:
+    Function:
+        Timeout: 3
+
+Resources:
+    BuildNotifyFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: ./
+            Handler: index.handle
+            Runtime: nodejs8.10
+            Events:
+                BuildNotify:
+                    Type: Api 
+                    Properties:
+                        Path: /
+                        Method: get
+            Environment:
+                Variables:
+                    SLACK_CHANNEL: '#develop'
+                    NODE_ENV: local

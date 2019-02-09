@@ -1,11 +1,14 @@
 const { WebClient } = require('@slack/client');
 
-const token = process.env.SLACK_TOKEN || '';
-const web = new WebClient(token);
+class SlackClient {
+  constructor(token) {
+    this.client = new WebClient(token);
+  }
 
-const postMessage = (message) => {
-  if (!message) Promise.reject();
-  return web.chat.postMessage(message);
-};
+  postMessage(message) {
+    if (!message) Promise.reject();
+    return this.client.chat.postMessage(message);
+  }
+}
 
-module.exports = postMessage;
+module.exports = SlackClient;
