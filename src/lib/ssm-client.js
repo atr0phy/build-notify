@@ -8,11 +8,7 @@ const getParameter = async (key, decrypt) => {
     Name: key,
     WithDecryption: decrypt,
   };
-  try {
-    return (await ssm.getParameter(params).promise()).Parameter.Value;
-  } catch (err) {
-    throw err;
-  }
+  return (await ssm.getParameter(params).promise()).Parameter.Value;
 };
 
 module.exports = getParameter;
