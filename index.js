@@ -5,10 +5,10 @@ const getParameter = require('./src/lib/ssm-client');
 const SLACK_CHANNEL = process.env.SLACK_CHANNEL || '';
 const SLACK_TOKEN_KEY = '/development/slack_api_token';
 const BuildStatus = {
-  IN_PROGRESS: 'デプロイを開始します',
-  SUCCEEDED: 'デプロイに成功しました',
-  FAILED: 'デプロイに失敗しました',
-  STOPPED: 'デプロイに失敗しました',
+  IN_PROGRESS: 'ビルドを開始します',
+  SUCCEEDED: 'ビルドに成功しました',
+  FAILED: 'ビルドに失敗しました',
+  STOPPED: 'ビルドに失敗しました',
 };
 
 const logger = new Logger();
