@@ -15,6 +15,6 @@
   },
   "dependencies": {
     "@slack/client": "^5.0.2",
-    "aws-sdk": "^2.814.0"
+    "aws-sdk": "^2.1368.0"
   }
 }
